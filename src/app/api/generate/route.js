@@ -5,6 +5,10 @@ import mammoth from 'mammoth';
 import { TextDecoder } from 'util';
 import { generateQuestionsFromText } from '@/lib/generateQuestionsFromText';
 
+// export async function GET() {
+//   return NextResponse.json({ message: "Route is reachable" });
+// }
+
 export async function POST(req) {
   const formData = await req.formData();
   const file = formData.get('file');

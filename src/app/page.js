@@ -84,6 +84,7 @@ export default function Home() {
     }
   }
   , [text]);
+  
   // Reset timer when file is cleared
   useEffect(() => {
     if (!file) {
