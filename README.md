@@ -14,6 +14,8 @@ pnpm dev
 bun dev
 ```
 
+This project allows user to upload either a pdf, word document, or txt file or even enter text to geneate questions with possible answers using AI.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
