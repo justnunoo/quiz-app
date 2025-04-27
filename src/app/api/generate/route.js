@@ -1,12 +1,12 @@
 // Project: AI Quiz Generator
-import { NextResponse } from 'next/server';
+// import { Response } from 'next/server';
 import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
 import { TextDecoder } from 'util';
 import { generateQuestionsFromText } from '@/lib/generateQuestionsFromText';
 
 // export async function GET() {
-//   return NextResponse.json({ message: "Route is reachable" });
+//   return Response.json({ message: "Route is reachable" });
 // }
 
 export async function POST(req) {
@@ -17,28 +17,9 @@ export async function POST(req) {
   let extractedText = inputText?.trim().replace(/\n/g, ' ') || '';
 
   if (file && file.size > 0) {
-    // const buffer = Buffer.from(await file.arrayBuffer());
-    // const fileType = file.name.split('.').pop().toLowerCase();
-
-    // try {
-    //   if (fileType === 'pdf') {
-    //     const pdfData = await pdfParse(buffer);
-    //     extractedText = pdfData.text;
-    //   } else if (fileType === 'docx') {
-    //     const result = await mammoth.extractRawText({ buffer });
-    //     extractedText = result.value;
-    //   } else if (fileType === 'txt') {
-    //     const decoder = new TextDecoder('utf-8');
-    //     extractedText = decoder.decode(buffer);
-    //   } else {
-    //     return NextResponse.json({ error: 'Unsupported file type.' }, { status: 400 });
-    //   }
-    // } catch (err) {
-    //   console.error('Error processing file:', err);
-    //   return NextResponse.json({ error: 'Failed to process uploaded file.' }, { status: 500 });
-    // }
+  
     console.log('Received file:', file?.name, 'size:', file?.size);
-    
+
     try {
       const buffer = Buffer.from(await file.arrayBuffer());
       const fileType = file.name.split('.').pop().toLowerCase();
@@ -53,16 +34,16 @@ export async function POST(req) {
         const decoder = new TextDecoder('utf-8');
         extractedText = decoder.decode(buffer);
       } else {
-        return NextResponse.json({ error: 'Unsupported file type.' }, { status: 400 });
+        return Response.json({ error: 'Unsupported file type.' }, { status: 400 });
       }
     } catch (err) {
       console.error('File parsing error:', err);
-      return NextResponse.json({ error: 'Failed to process uploaded file.' }, { status: 500 });
+      return Response.json({ error: 'Failed to process uploaded file.' }, { status: 500 });
     }    
   }
 
   if (!extractedText || extractedText.length < 50) {
-    return NextResponse.json({ error: 'Insufficient content to generate questions.' }, { status: 400 });
+    return Response.json({ error: 'Insufficient content to generate questions.' }, { status: 400 });
   }
 
   const chunks = chunkText(extractedText, 1500);
@@ -72,7 +53,7 @@ export async function POST(req) {
   const uniqueQuestions = Array.from(new Set(flatQuestions.map(q => JSON.stringify(q)))).map(q => JSON.parse(q));
   const limitedQuestions = uniqueQuestions.slice(0, 20);
 
-  return NextResponse.json({ questions: limitedQuestions });
+  return Response.json({ questions: limitedQuestions });
 }
 
 function chunkText(text, maxLength = 1500) {
