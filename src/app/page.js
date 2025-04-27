@@ -105,7 +105,14 @@ export default function Home() {
         method: 'POST',
         body: formData,
       });
-  
+      if (!res.ok) {
+        const errorData = await res.text();
+        console.error('Error generating questions:', errorData);
+        setQuestions([]);
+        return;
+      }
+
+      console.log('Response from server:', res);
       const data = await res.json();
       
       if (Array.isArray(data)) {
