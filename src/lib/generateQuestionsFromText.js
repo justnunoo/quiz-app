@@ -4,6 +4,7 @@ export async function generateQuestionsFromText(text) {
   
   Instructions:
   - Generate a maximum of 21 questions based strictly on the input text.
+  - Add more context to the questions if needed, but do not add any new information.
   - Each question should have 4 options.
   - Return ONLY a JSON array like the example below. No explanation. No markdown. No extra text.
   
