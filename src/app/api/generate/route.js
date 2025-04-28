@@ -42,7 +42,7 @@ export async function POST(req) {
   // const chunks = chunkText(extractedText, 1500);
   const smartChunks = smartChunkText(extractedText, 1500);
   const shuffledChunks = shuffleChunks(smartChunks);
-  const selectedChunks = shuffledChunks.slice(0, 200); // Select up to 5 chunks for processing
+  const selectedChunks = shuffledChunks.slice(0, 100); // Select up to 5 chunks for processing
   const questionChunks = await Promise.all(selectedChunks.map(chunk => generateQuestionsFromText(chunk)));
 
   const flatQuestions = questionChunks.flat();

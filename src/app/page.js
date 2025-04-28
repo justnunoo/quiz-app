@@ -95,6 +95,12 @@ export default function Home() {
   , [file]);
 
   const handleGenerate = async () => {
+    setSubmitted(false);
+    if (text.trim().length < 100 && !file) {
+      alert('Please provide at least 100 characters of text or upload a file.');
+      return;
+    }
+    if (loading) return; // Prevent multiple submissions
     setLoading(true);
     const formData = new FormData();
     formData.append('text', text);
@@ -160,6 +166,7 @@ export default function Home() {
     setShowAnswers(false);
     setShowModal(false);
     setTimeLeft(60);
+    setSubmitted(false);
     setTimerActive(true);
   };
   
